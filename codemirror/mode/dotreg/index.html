@@ -1,0 +1,133 @@
+<!doctype html>
+
+<title>CodeMirror: Dotreg mode</title>
+<meta charset="utf-8"/>
+<link rel=stylesheet href="../../doc/docs.css">
+
+<link rel="stylesheet" href="../../lib/codemirror.css">
+<link rel="stylesheet" href="../../addon/hint/show-hint.css">
+<script src="../../lib/codemirror.js"></script>
+<script src="../../addon/mode/simple.js"></script>
+<script src="../../addon/hint/show-hint.js"></script>
+<script src="dotreg.js"></script>
+<style>.CodeMirror {border-top: 1px solid black; border-bottom: 1px solid black;}</style>
+<div id=nav>
+  <a href="http://codemirror.net"><h1>CodeMirror</h1><img id=logo src="../../doc/logo.png"></a>
+
+  <ul>
+    <li><a href="../../index.html">Home</a>
+    <li><a href="../../doc/manual.html">Manual</a>
+    <li><a href="https://github.com/codemirror/codemirror">Code</a>
+  </ul>
+  <ul>
+    <li><a href="../index.html">Language modes</a>
+    <li><a class=active href="#">Dotreg</a>
+  </ul>
+</div>
+
+<article>
+<h2>Dotreg mode</h2>
+<form>
+<button type="button" value="save" id="save">Save</button>
+<style>
+.cm-s-default .cm-comment      {color: #009900;}
+.cm-s-default .cm-comment-block{color: #a0a0a0;}
+.cm-s-default .cm-comment-body {color: #00aa00;font-style:italic;margin-left:10px;}
+.cm-s-default .cm-keyword      {color: #990033;}
+.cm-s-default .cm-register     {color: #0000ff;font-weight:bold;}
+.cm-s-default .cm-bitfield     {color: #cc00cc;font-weight:bold;}
+</style>
+
+<textarea id="code" name="code">
+###############################
+addressWidth 8
+dataWidth 16
+prefix CAUI_TX
+referencePrefix PAM
+###############################
+
+register TX_MAIN_CONTROL 8'h0
+attr no_check_type
+registerComment
+This is TBD
+endComment
+
+bitfield [15:2] Rsvd0 sample 14'b00000000000000
+attr test2
+bitfieldComment
+This is a test
+endComment
+endBitfield
+
+bitfield [1] Rsvd1
+bitfield [0] Test
+
+endRegister
+
+register REG_CKREG_CFG
+name "REG_CKREG_CFG"
+registerComment
+    REG_CKREG_CFG
+endComment
+bitfield [22:0] SRX_CLKREG_CTRL configuration 23'b10_00_00_0_1_000_011_0_0_1_000101
+attribute split_nosuffix
+bitfieldComment
+endComment
+bitfieldTable Positions  , Pin Name    , Default , Description
+bitfieldTable 5:0        , cal_data    , 000101 , If cal_oride=0 then cal_data<5:0> is the offset added/subtracted to/from the final autocal code.  cal_data<5>=1 means addition\, 0 means subtraction. *** When using offset function\, turn off background update. ***  If cal_oride=1 then cal_data<5:0> overwrites final autocal code.
+bitfieldTable 6          , cal_oride   , 1      , If 0 then cal_data<5:0> is the offset added into the final autocal code.  If 1 then cal_data<5:0> overwrites final autocal code.
+bitfieldTable 7          , atb_sel     , 0      , Bring out vref for ATB.
+bitfieldTable 8          , cal_polarity, 0      , Comparator output polarity swap. A 0 means as is\, a 1 means inversion.
+bitfieldTable 11:9       , vreg_lmt    , 011    , Autocal majority vote number of total counts: <000>=1\, <001>=3\, <010>=7\, <011>=15\, <100>=31\, <101>=63\, <110>=127\, <111>=255.
+bitfieldTable 14:12      , vreg_mode   , 000    , <000>=not used\, <001>=not used\, <010>=0.914V\, <011>=0.941V\, <100>=not used\, <101>=not used\, <110>=0.97V\, <111>=not used
+bitfieldTable 15         , resetb      , 1      , Reset autocal FSM and analog controls\, active low. Autocal FSM starts the calibration process after the vreg_resetb is asserted. Regulator analog controls also use resetb to go into the normal operation mode.  After pdb is asserted in REG_CFG\, wait for at least 256 clock cycles before asserting resetb to make sure the regulator internal power up sequence is complete.
+bitfieldTable 16 (0)     , stp_update  , 0      , Stop 1 LSB background code update.  If 0 background update is turned "ON".  If 1 background update is turned "OFF".
+bitfieldTable 18:17 (2:1), spare_fuse_i, 00     , Unused
+bitfieldTable 20:19 (4:3), spare_pins_i, 00     , Spare pins\, not used.
+bitfieldTable 22:21 (6:5), ftrim       , 10     , Trim
+endRegister
+
+
+</textarea>
+</form>
+    <script>
+      function saveTextFile() {
+         var textblock = document.getElementById("code").value;
+         var blob = new Blob([textblock], {type:'text/plain'});
+         var saveas = "demo.tpl";
+         var downLink = document.createElement("a");
+         downLink.innerHTML="Download File";
+
+         if(window.URL != null) {
+           downLink.href = window.URL.createObjectURL(blob);
+         } else {
+           downLink.href = window.URL.createObjectURL(blob);
+           downLink.onclick=destroyClickedEvent;
+           downLink.style.display="none";
+           document.body.appendChild(downLink);
+         }
+         downLink.click();
+      }
+      var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+        mode: "text/dotreg",
+        extraKeys: {"Ctrl-Space": "autocomplete"},
+        lineNumbers: true,
+      });
+
+      var btn = document.getElementById("save");
+      btn.addEventListener('click', saveTextFile);
+    </script>
+
+<p>Press <strong>ctrl-space</strong> to activate autocompletion. Built
+on top of the <a href="../doc/manual.html#addon_show-hint"><code>show-hint</code></a>
+and <a href="../doc/manual.html#addon_javascript-hint"><code>javascript-hint</code></a>
+addons.</p>
+
+<p>Enter $ followed by <strong>ctrl-space</strong> to show a list of available
+code snippets that can be expanded. When the list is popped up type another character
+to narrow the range.
+</p>
+
+<p><strong>MIME types defined:</strong> <code>text/dotreg</code>.</p>
+
+</article>

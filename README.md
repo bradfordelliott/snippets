@@ -1,2 +1,4 @@
-# snippets
-My very primitive snippet manager
+## snippets
+
+Snippet Library Manager
+
