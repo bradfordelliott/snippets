@@ -28,6 +28,12 @@ template_html = string.Template('''<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01/
 <style>
 $styles
 .CodeMirror {border-top: 1px solid black;border-bottom:1px solid black; margin-left:20px; margin-right:20px; height:auto;clear:both;}
+.cm-tab {
+         background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAMCAYAAAAkuj5RAAAAAXNSR0IArs4c6QAAAGFJREFUSMft1LsRQFAQheHPowAKoACx3IgEKtaEHujDjORSgWTH/ZOdnZOcM/sgk/kFFWY0qV8foQwS4MKBCS3qR6ixBJvElOobYAtivseIE120FaowJPN75GMu8j/LfMwNjh4HUpwg4LUAAAAASUVORK5CYII=);
+         background-position: right;
+         background-repeat: no-repeat;
+      }
+
 </style>
 
 <script type="text/JavaScript">

@@ -343,11 +343,23 @@ $(document).ready(function() {
 
 <script src="/codemirror/mode/${lexer}/${lexer}.js"></script>
 <script>
+function betterTab(cm) {
+  if (cm.somethingSelected()) {
+    cm.indentSelection("add");
+  } else {
+    cm.replaceSelection(cm.getOption("indentWithTabs")? "\t":
+      Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input");
+  }
+}
 var editor = CodeMirror.fromTextArea(document.getElementById("snippet"), {
    mode: "text/${mime}",
    extraKeys: {"Ctrl-Space" : "autocomplete"},
    lineNumbers: true,
-   viewportMargin: Infinity
+   viewportMargin: Infinity,
+   tabSize: 4,
+   indentWithTabs: false,
+   indentUnit: 4,
+   extraKeys: {Tab: betterTab}
 });
 
 </script>
