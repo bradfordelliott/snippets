@@ -333,7 +333,8 @@ $(document).ready(function() {
     <div class='field_label'>Revisions:</div><div style='float:left;' class='edit_revisions' id='snippet_${id}_revisions' name='snippet_${id}_revisions'>...</div>
     <div class='field_label' style='float:right;'><input type='button' onclick='return snippet_add();' value='Create'/></div>
     <div class='field_label' style='float:right;'><input type='button' onclick='return snippet_save(${id});' value='Save'/></div>
-    <div class='field_label' style='float:right;'><input type="button" value="HTML" onclick='generate(editor, FORMAT_HTML);'/></div>
+    <div class='field_label' style='float:right;'><input type="button" value="HTML" onclick='generate(editor, FORMAT_HTML, "${label}", "${language}");'/></div>
+    <div class='field_label' style='float:right;'><input type="button" value="PDF" onclick='generate(editor, FORMAT_PDF, "${label}", "${language}");'/></div>
     <div style='clear:both;'></div>
 </div>
 <div style='border-top:1px solid #ccc;background-color:#fff;padding:10px;margin:20px;margin-top:0px;margin-bottom:0px;padding-left:20px;'>
@@ -353,13 +354,12 @@ function betterTab(cm) {
 }
 var editor = CodeMirror.fromTextArea(document.getElementById("snippet"), {
    mode: "text/${mime}",
-   extraKeys: {"Ctrl-Space" : "autocomplete"},
    lineNumbers: true,
    viewportMargin: Infinity,
    tabSize: 4,
    indentWithTabs: false,
    indentUnit: 4,
-   extraKeys: {Tab: betterTab}
+   extraKeys: {"Tab": betterTab, "Ctrl-Space" : "autocomplete"}
 });
 
 </script>

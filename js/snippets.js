@@ -23,9 +23,27 @@ var FORMAT_HTML="html";
  * @param editor [I] - The codemirror instance
  * @param format [I] - The output format (FORMAT_PDF or FORMAT_HTML)
  */
-function generate(editor, format)
+function generate(editor, format, label, language)
 {
-    $.post("http://" + hostname + ":" + port + "/shorte/" + format, {data: editor.getValue()})
+    console.log("Language: " + language);
+
+    var content = editor.getValue();
+    if(language == "shorte")
+    {
+    }
+    else if(language == "markdown")
+    {
+        content = "@markdown\n" + content;
+    }
+    else
+    {
+        snippet = "@doc.title " + label + "\n";
+        snippet += "@doc.subtitle " + "Snippet Examples\n";
+        snippet += "@doc.subtitle@doc.body\n@h1 " + label + "\n@" + language + "\n" + content;
+        content = snippet;
+    }
+
+    $.post("http://" + hostname + ":" + port + "/shorte/" + format, {data: content})
         .done(function(data) {
              var result = window.open();
              if(result == undefined)

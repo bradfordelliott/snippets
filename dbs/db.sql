@@ -41,9 +41,9 @@ INSERT INTO users (name) VALUES('dlinnington');
 
 INSERT INTO snippets (cdate, ctime, language, label, author, description) VALUES(date('now', 'localtime'), time('now', 'localtime'), 'c',        'test_c',        1, 'A test snippet');
 INSERT INTO snippets (cdate, ctime, language, label, author, description) VALUES(date('now', 'localtime'), time('now', 'localtime'), 'python',   'test_python',   1, 'Another test snippet');
-INSERT INTO snippets (cdate, ctime, language, label, author, description) VALUES(date('now', 'localtime'), time('now', 'localtime'), 'shorte',   'test_shorte',   1, 'Another test snippet');
+INSERT INTO snippets (cdate, ctime, language, label, author, description) VALUES(date('now', 'localtime'), time('now', 'localtime'), 'shorte',   'test_shorte',   1, 'Type $ followed by <ctrl+space> to activate autocompletion');
 INSERT INTO snippets (cdate, ctime, language, label, author, description) VALUES(date('now', 'localtime'), time('now', 'localtime'), 'markdown', 'test_markdown', 1, 'A markdown snippet');
-INSERT INTO snippets (cdate, ctime, language, label, author, description) VALUES(date('now', 'localtime'), time('now', 'localtime'), 'dotreg',   'test_dotreg',   1, 'A dotreg example');
+INSERT INTO snippets (cdate, ctime, language, label, author, description) VALUES(date('now', 'localtime'), time('now', 'localtime'), 'dotreg',   'test_dotreg',   1, 'Type $ followed by <ctrl+space> to activate autocompletion');
 INSERT INTO snippets (cdate, ctime, language, label, author, description) VALUES(date('now', 'localtime'), time('now', 'localtime'), 'makefile', 'test_makefile', 1, 'A makefile example');
 
 INSERT INTO revisions (sid, cdate, ctime, data) VALUES(1, date('now', 'localtime'), time('now', 'localtime'), '
